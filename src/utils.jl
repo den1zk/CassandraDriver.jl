@@ -1,9 +1,9 @@
-error_desc(rc::Cint) = unsafe_string( ccall((:cass_error_desc, libcass, Cstring, (Cint,), rc) )
+error_desc(rc::Cint) = unsafe_string( ccall((:cass_error_desc, libcass, Cstring, (Cint,), rc) ) )
 
 function value_get_int32(row::Ptr{Void}, idx::Int)
     val = Ref{Int32}(0)
-    ref = ccall((:cass_row_get_column, "libcassandra"), Ptr{Void}, (Ptr{Void}, Cint), row, idx)
-    rc = ccall((:cass_value_get_int32, "libcassandra"), Cint, (Ptr{Void}, Ptr{Int32}), ref, val)
+    ref = ccall((:cass_row_get_column, libcass), Ptr{Void}, (Ptr{Void}, Cint), row, idx)
+    rc = ccall((:cass_value_get_int32, libcass), Cint, (Ptr{Void}, Ptr{Int32}), ref, val)
     val.x
 end
 
