@@ -3,13 +3,20 @@ const libcass = "libcassandra"
 Libdl.dlopen(libcass)
 
 import Base.Random.UUID
+import DataFrames: DataFrame
+import DataArrays: DataArray
 
 const OK = Cint(0)
 include("constants.jl")
+const Fields = Array{Tuple{String, ValueType}}
+abstract type Iterable end
+
 include("cluster.jl")
 include("result.jl" )
+include("value.jl" )
 include("row.jl")
 include("iterator.jl")
+include("collect.jl")
 include("future.jl")
 include("session.jl")
 include("statement.jl")

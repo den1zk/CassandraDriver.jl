@@ -74,62 +74,72 @@ IteratorTypes = Dict{Integer, IteratorType}(
                 14 => MaterializedViewMetaIteratorType() )
 
 abstract type ValueType end
-struct CustomValueType <: ValueType end
-struct AsciiValueType <: ValueType end
-struct BigintValueType <: ValueType end
-struct BlobValueType <: ValueType end
-struct BooleanValueType <: ValueType end
-struct CounterValueType <: ValueType end
-struct DecimalValueType <: ValueType end
-struct DoubleValueType <: ValueType end
-struct FloatValueType <: ValueType end
-struct IntValueType <: ValueType end
-struct TextValueType <: ValueType end
-struct TimestampValueType <: ValueType end
-struct UuidValueType <: ValueType end
-struct VarcharValueType <: ValueType end
-struct VarintValueType <: ValueType end
-struct TimeuuidValueType <: ValueType end
-struct InetValueType <: ValueType end
-struct DateValueType <: ValueType end
-struct TimeValueType <: ValueType end
-struct SmallIntValueType <: ValueType end
-struct TinyIntValueType <: ValueType end
-struct DurationValueType <: ValueType end
-struct ListValueType <: ValueType end
-struct MapValueType <: ValueType end
-struct SetValueType <: ValueType end
-struct UdtValueType <: ValueType end
-struct TupleValueType <: ValueType end
+struct CustomValue <: ValueType end
+struct AsciiValue <: ValueType end
+struct BigintValue <: ValueType end
+struct BlobValue <: ValueType end
+struct BooleanValue <: ValueType end
+struct CounterValue <: ValueType end
+struct DecimalValue <: ValueType end
+struct DoubleValue <: ValueType end
+struct FloatValue <: ValueType end
+struct IntValue <: ValueType end
+struct TextValue <: ValueType end
+struct TimestampValue <: ValueType end
+struct UuidValue <: ValueType end
+struct VarcharValue <: ValueType end
+struct VarintValue <: ValueType end
+struct TimeuuidValue <: ValueType end
+struct InetValue <: ValueType end
+struct DateValue <: ValueType end
+struct TimeValue <: ValueType end
+struct SmallIntValue <: ValueType end
+struct TinyIntValue <: ValueType end
+struct DurationValue <: ValueType end
+struct ListValue <: ValueType end
+struct MapValue <: ValueType end
+struct SetValue <: ValueType end
+struct UdtValue <: ValueType end
+struct TupleValue <: ValueType end
 
 ValueTypes = Dict{Cint, ValueType}(
-                Cint(0x0000) => CustomValueType(),
-                Cint(0x0001) => AsciiValueType(),
-                Cint(0x0002) => BigintValueType(),
-                Cint(0x0003) => BlobValueType(),
-                Cint(0x0004) => BlobValueType(),
-                Cint(0x0005) => CounterValueType(),
-                Cint(0x0006) => DecimalValueType(),
-                Cint(0x0007) => DoubleValueType(),
-                Cint(0x0008) => FloatValueType(),
-                Cint(0x0009) => IntValueType(),
-                Cint(0x000A) => TextValueType(),
-                Cint(0x000B) => TimestampValueType(),
-                Cint(0x000C) => UuidValueType(),
-                Cint(0x000D) => VarcharValueType(),
-                Cint(0x000E) => VarintValueType(),
-                Cint(0x000F) => TimeuuidValueType(),
-                Cint(0x0010) => InetValueType(),
-                Cint(0x0011) => DateValueType(),
-                Cint(0x0012) => TimeValueType(),
-                Cint(0x0013) => SmallIntValueType(),
-                Cint(0x0014) => TinyIntValueType(),
-                Cint(0x0015) => DurationValueType(),
-                Cint(0x0020) => ListValueType(),
-                Cint(0x0021) => MapValueType(),
-                Cint(0x0022) => SetValueType(),
-                Cint(0x0030) => UdtValueType(),
-                Cint(0x0031) => TupleValueType() )
+                Cint(0x0000) => CustomValue(),
+                Cint(0x0001) => AsciiValue(),
+                Cint(0x0002) => BigintValue(),
+                Cint(0x0003) => BlobValue(),
+                Cint(0x0004) => BooleanValue(),
+                Cint(0x0005) => CounterValue(),
+                Cint(0x0006) => DecimalValue(),
+                Cint(0x0007) => DoubleValue(),
+                Cint(0x0008) => FloatValue(),
+                Cint(0x0009) => IntValue(),
+                Cint(0x000A) => TextValue(),
+                Cint(0x000B) => TimestampValue(),
+                Cint(0x000C) => UuidValue(),
+                Cint(0x000D) => VarcharValue(),
+                Cint(0x000E) => VarintValue(),
+                Cint(0x000F) => TimeuuidValue(),
+                Cint(0x0010) => InetValue(),
+                Cint(0x0011) => DateValue(),
+                Cint(0x0012) => TimeValue(),
+                Cint(0x0013) => SmallIntValue(),
+                Cint(0x0014) => TinyIntValue(),
+                Cint(0x0015) => DurationValue(),
+                Cint(0x0020) => ListValue(),
+                Cint(0x0021) => MapValue(),
+                Cint(0x0022) => SetValue(),
+                Cint(0x0030) => UdtValue(),
+                Cint(0x0031) => TupleValue() )
+
+julia_type(::AsciiValue) = String
+julia_type(::BigintValue) = Int64
+julia_type(::BooleanValue) = Bool
+julia_type(::CounterValue) = Int64
+julia_type(::DoubleValue) = Float64
+julia_type(::FloatValue) = Float32
+julia_type(::IntValue) = Int32
+julia_type(::TextValue) = String
+julia_type(::VarcharValue) = String
 
 #=
 const ValueTypeMap = Dict{ValueType, DataType}(

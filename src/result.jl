@@ -1,31 +1,11 @@
-struct Result
+struct Result <: Iterable
     cass_result::Ptr{Void}
     row_count::Int
-    fields::Array{Tuple{String, ValueType}}
+    fields::Fields
+    typ::IteratorType
     function Result(r::Ptr{Void})
         cnt, flds = meta(r)
-        new(r, cnt, flds)
-    end
-end
-abstract type AbstractRow end
-
-macro _struct(nm, flds)
-#=
-    println(typeof(nm.args[1]))
-    println(flds.args[2])
-    quote
-    end
-=#
-    local s=""
-    for fld in flds.args
-        s *= String(fld.args[1]) * "::" * String(fld.args[2]) * "\n"
-    end
-    #typ = String(nm.args[1])
-    typ = String(nm)
-    return quote
-        struct $typ <: AbstractRow
-            $s
-        end
+        new(r, cnt, flds, ResultIteratorType())
     end
 end
 
