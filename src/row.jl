@@ -14,5 +14,7 @@ function Row(ptr::Ptr{Void}, fields::Fields)
     Row(ptr, vals, fields)
 end
 
+export Row
+
 get_column(ptr::Ptr{Void}, idx::Int) = ccall((:cass_row_get_column, libcass),
             Ptr{Void}, (Ptr{Void}, Cint), ptr, idx)

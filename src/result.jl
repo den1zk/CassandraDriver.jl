@@ -1,5 +1,5 @@
 struct Result <: Iterable
-    cass_result::Ptr{Void}
+    ptr::Ptr{Void}
     row_count::Int
     fields::Fields
     typ::IteratorType
@@ -9,7 +9,9 @@ struct Result <: Iterable
     end
 end
 
-free(r::Result) = ccall((:cass_result_free, libcass), Void, (Ptr{Void},), r.cass_result)
+export Result, free
+
+free(r::Result) = ccall((:cass_result_free, libcass), Void, (Ptr{Void},), r.ptr)
 
 function meta(r::Ptr{Void})
     row_count = ccall((:cass_result_row_count, libcass), Cint, (Ptr{Void},), r)

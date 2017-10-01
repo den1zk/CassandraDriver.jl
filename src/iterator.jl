@@ -4,6 +4,8 @@ struct Iterator_C{T <: Iterable}
     src::T
 end
 
+export Iterator_C, free, iterate
+
 function iterator_type(ptr::Ptr{Void})
     t = ccall((:cass_iterator_type, libcass), Cint, (Ptr{Void},), ptr)
     IteratorTypes[t]
@@ -12,7 +14,7 @@ end
 free(it::Iterator_C) = ccall((:cass_iterator_free, libcass), Void, (Ptr{Void},), it.ptr)
 
 from_result(r::Result) = Iterator_C(
-    ccall((:cass_iterator_from_result, libcass), Ptr{Void}, (Ptr{Void},), r.cass_result), r )
+    ccall((:cass_iterator_from_result, libcass), Ptr{Void}, (Ptr{Void},), r.ptr), r )
 
 from_row(r::Row) = Iterator_C(
     ccall((:cass_iterator_from_row, libcass), Ptr{Void}, (Ptr{Void},), r.ptr), r )

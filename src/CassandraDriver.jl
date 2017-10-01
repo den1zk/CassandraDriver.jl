@@ -22,14 +22,14 @@ include("session.jl")
 include("statement.jl")
 
 
-export OK, Driver, connect, free
+export OK, Driver, connect, free, execute
 
 type Driver
     cluster::Cluster
     session::Session
     function Driver(contact_points::String)
-        cluster = cluster_new(contact_points)
-        session = session_new()
+        cluster = Cluster(contact_points)
+        session = Session()
         new(cluster, session)
     end
 end
@@ -53,7 +53,7 @@ end
 
 function execute(d::Driver, s::Statement)
     future = ccall((:cass_session_execute, libcass), Ptr{Void},
-            (Ptr{Void}, Ptr{Void}), d.session.cass_session, s.ptr)
+            (Ptr{Void}, Ptr{Void}), d.session.ptr, s.ptr)
     free(s)
     Future_C(future)
 end
