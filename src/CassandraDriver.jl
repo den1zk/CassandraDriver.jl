@@ -11,7 +11,6 @@ include("constants.jl")
 const Fields = Array{Tuple{String, ValueType}}
 abstract type Iterable end
 
-include("utils.jl")
 include("cluster.jl")
 include("result.jl")
 include("value.jl")
