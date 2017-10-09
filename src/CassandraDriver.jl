@@ -11,9 +11,10 @@ include("constants.jl")
 const Fields = Array{Tuple{String, ValueType}}
 abstract type Iterable end
 
+include("utils.jl")
 include("cluster.jl")
-include("result.jl" )
-include("value.jl" )
+include("result.jl")
+include("value.jl")
 include("row.jl")
 include("iterator.jl")
 include("collect.jl")
@@ -24,7 +25,7 @@ include("statement.jl")
 
 export OK, Driver, connect, free, execute
 
-type Driver
+struct Driver
     cluster::Cluster
     session::Session
     function Driver(contact_points::String)

@@ -26,8 +26,10 @@ end
 
 function Base.fetch(f::Future_C)
    wait(f)
+   err = future_error_check(f.ptr)
+   err.code != OK && error(err.message)
    r = ccall((:cass_future_get_result, libcass), Ptr{Void}, (Ptr{Void},), f.ptr)
    Result(r)
 end
 
-error_code(f::Future_C) = ccall((:cass_future_error_code, libcass), Int, (Ptr{Void},), f.ptr)
+error_code(f::Future_C) = ccall((:cass_future_error_code, libcass), Cint, (Ptr{Void},), f.ptr)

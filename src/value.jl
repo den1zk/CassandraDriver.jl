@@ -28,13 +28,12 @@ function get_string(row::Ptr{Void}, buffer_size = 128)
     len = Ref{Csize_t}(0)
     rc = ccall((:cass_value_get_string, libcass), Cint,
             (Ptr{Void}, Ptr{Void}, Ptr{Csize_t}), row, ptr_val, len)
-    val = ptr_val.x
-    val[len.x + 1] = 0
-    unsafe_string(pointer(val))
+    ptr_val.x[len.x + 1] = 0
+    unsafe_string(pointer(ptr_val.x))
 end
 
 get_value(::IntValue, ptr::Ptr{Void}) = get_int32(ptr)
-get_value(::BigintValue, ptr::Ptr{Void}) = get_int32(ptr)
+get_value(::BigintValue, ptr::Ptr{Void}) = get_int64(ptr)
 get_value(::BooleanValue, ptr::Ptr{Void}) = get_bool(ptr)
 get_value(::DoubleValue, ptr::Ptr{Void}) = get_float64(ptr)
 get_value(::VarcharValue, ptr::Ptr{Void}, buffer_size = 128) = get_string(ptr, buffer_size)
